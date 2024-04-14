@@ -1,0 +1,44 @@
+Net1-Admin:
+Общие:
+Бекапы
+Firewall: netsh advfirewall set allprofiles state off
+IPv4 1.2.3.1 / 255.255.255.240 / 1.2.3.2 / 1.2.3.2 / 8.8.8.8
+IPv6 off
+Примонтировать
+Ставим время 1 ноября 2023г
+netsh advfirewall firewall set rule group=”Обнаружение сети” new enable=Yes
+
+SQL:
+A.7.R / SOFT / 00 / SERVER_I / PACKAGES / SQLEXPREE / PR_
+Named Instance = WINNCCSQL
+DIsable на Automatic
+Ставим пароль и в FILESTREAM все галки
+Открываем sql -> SQL server network configuration -> TCP/IP -> Enabled
+Открываем sql -> sql server services -> ребут server (win)
+Ребут компа
+
+ЦУС:
+A.7.R / SOFT / 00 / SERVER_I / PACKAGES / RU_RU / SE
+Проверка подлинности SQL -> sa:xxXX1234 (1.2.3.1)
+A.7.R / SOFT / 00 / CLIENT_I / PACKAGES / RU_RU / CL
+
+Авторизируемся в ЦУС с Рабочего Стола (Administrator:Administrator), меняем пасс, заливаем лицухи
+
+ЦУС:
+Создаём координатора, открываем свойства, роли узла удаляем, добавляем HW-VA
+Создаём второго координатора и добавляем межсерверный канал 
+Создаём 4 клиента: Net1-Admin – Cord1; Net1-Open – Cord1; Net1-OperCA – Cord1; Net2-Client – Cord2
+Настраиваем связи по схеме:
+Net1-Cord – Net2-Cord; Net1-Open; Net1-Admin; Net1-OperCA
+	Net2-Cord – Ne1-Cord; Net2-Client; Net1-OperCa
+Net1-Admin – Net1-Cord; Net2-Client; Net1-Open; Net1-OperCA
+Net1-Open – Net1-Cord; Net1-Admin; Net1-OperCA
+Net2-Client – Net2-Cord; Net1-Admin
+Делаем выгрузку HTML: Моя сеть –  Сохранить отчет о структуре сети в файл
+Создаём списки: Моя сеть – Создать справочники – Создать для всего списка 
+
+УКЦ:
+Устанавливаем УКЦ A.7_R/SOFT/____/SETUP, первое; оставляем как есть; sa:xxXX1234; оставляем так; оставляем так
+Пароль свой нужно указать
+После установки открываем “Сетевые узлы”, выделяем всё, жмём ПКМ и “Выдать новый дистрибутив ключей”, скипаем всё кроме пароля xxXX1234
+
